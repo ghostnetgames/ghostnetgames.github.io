@@ -16,7 +16,7 @@ topnav_dropdowns:
       folderitems:
         - title: GhostNet API
           url: /mydoc_introduction.html
-        - title: Zomnies
+        - title: Zombies
           url: /p1_landing_page.html
         - title: Product 2
           url: /p2_landing_page.html
