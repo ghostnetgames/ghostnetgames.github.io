@@ -28,10 +28,6 @@ entries:
       output: web, pdf
       type: homepage
 
-    - title: Introduction
-      url: /mydoc_introduction.html
-      output: web, pdf
-
     - title: Supported features
       url: /mydoc_supported_features.html
       output: web, pdf
@@ -48,8 +44,8 @@ entries:
     output: web, pdf
     folderitems:
 
-    - title: Install Jekyll on Windows
-      url: /mydoc_install_jekyll_on_windows.html
+    - title: Install-Package GhostOpenApi
+      url: /mydoc_install_nuget.html
       output: web, pdf
 
   - title: GhostNet Api
@@ -62,7 +58,6 @@ entries:
 
       subfolders:
       - title: Api List
-        url: /mydoc_tdd_start2.html
         output: web
         subfolderitems:
 
@@ -70,13 +65,22 @@ entries:
           url: /mydoc_tdd_start3.html
           output: web
 
-  - title: Test Driven Development
+  - title: Technical Note
     output: web, pdf
 
     folderitems:
-    - title: NUnit
+    - title: Open Api Architecture
       url: /mydoc_tdd_start.html
       output: web, pdf
+
+      subfolders:
+      - title: Test Driven Development
+        output: web, pdf
+        subfolderitems:
+
+        - title: NUnit
+          url: /mydoc_tdd_start5.html
+          output: web
 
 
   - title: Troubleshooting
