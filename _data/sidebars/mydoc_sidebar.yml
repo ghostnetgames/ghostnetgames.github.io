@@ -32,10 +32,6 @@ entries:
       url: /mydoc_supported_features.html
       output: web, pdf
 
-    - title: About the theme author
-      url: /mydoc_about.html
-      output: web, pdf
-
     - title: Support
       url: /mydoc_support.html
       output: web, pdf
@@ -74,12 +70,44 @@ entries:
       output: web, pdf
 
       subfolders:
+      - title: Software Architecture
+        output: web, pdf
+        subfolderitems:
+
+        - title: Start
+          url: /mydoc_tdd_start6.html
+          output: web
+
       - title: Test Driven Development
         output: web, pdf
         subfolderitems:
 
         - title: NUnit
           url: /mydoc_tdd_start5.html
+          output: web
+
+      - title: BlockChain
+        output: web, pdf
+        subfolderitems:
+
+        - title: Start
+          url: /mydoc_tdd_start6.html
+          output: web
+
+      - title: Xamarin
+        output: web, pdf
+        subfolderitems:
+
+        - title: Start
+          url: /mydoc_tdd_start6.html
+          output: web
+          
+      - title: DJango
+        output: web, pdf
+        subfolderitems:
+
+        - title: Start
+          url: /mydoc_tdd_start6.html
           output: web
 
 

@@ -27,5 +27,20 @@ GhostNet은 C#과 Xamarin Platform 기반으로 만들어졌습니다. Xamarin�
 
 ## GhostNet OpenApi 구조
 OpenApi는 외부에서 제작된 App이 GhostNet App과 통신하기 위해 만들어진 Api입니다. 
+GhostNet Platform의 Transport 계층과 BlockChain Client 계층을 그대로 Package화하여 배포합니다.
+따라서 사용자는 Transaction의 형식과 생성 과정 등을 신경쓸 필요 없이 원하는 데이터를 요청하고 주고 받을 수 있습니다.
+
+
+
+## GhostNet Api 보상 체계
+
+### 1. 계정 생성
+OpenApi를 사용하기 위해서는 GhostNet 계정을 생성해야합니다.
+GhostNet과 통신하기 위해서 필수는 아니지만 보상을 받거나 Transaction을 모아볼 때 GhostNet 계정을 기준으로 필터링 할 수 있습니다.
+
+### 2. Broker Id
+OpenApi의 Api들 중 Transaction을 생성하는 Api들은 Broker Id를 입력할 수 있습니다. 
+Broker Id는 GhostNet의 Master 노드들과 보상을 나눠 갖습니다.
+
 
 {% include links.html %}
