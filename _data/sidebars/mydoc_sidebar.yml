@@ -49,7 +49,7 @@ entries:
 
     folderitems:
     - title: Overview
-      url: /mydoc_tdd_start1.html
+      url: /mydoc_api_overview.html
       output: web, pdf
 
       subfolders:
@@ -66,7 +66,7 @@ entries:
 
     folderitems:
     - title: Open Api Architecture
-      url: /mydoc_tdd_start.html
+      url: /mydoc_api_architecture.html
       output: web, pdf
 
       subfolders:
@@ -83,7 +83,7 @@ entries:
         subfolderitems:
 
         - title: NUnit
-          url: /mydoc_tdd_start5.html
+          url: /mydoc_tdd_start.html
           output: web
 
       - title: BlockChain

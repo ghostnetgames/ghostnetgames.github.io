@@ -5,7 +5,7 @@ entries:
   levels: one
   folders:
 
-  - title: Products
+  - title: GhostNet Games
     output: web
     folderitems:
     - title: News
@@ -14,10 +14,10 @@ entries:
     - title: Ghost Open API
       url: /index.html
       output: web
-    - title: Product 1
+    - title: Zombies
       url: /p1_landing_page.html
       output: web
-    - title: Product 2
+    - title: Prj:DeathGame
       url: /p2_landing_page.html
       output: web
 
