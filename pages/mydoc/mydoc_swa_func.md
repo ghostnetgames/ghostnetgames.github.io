@@ -12,7 +12,7 @@ folder: mydoc
 루틴을 작성할 때는 루틴에 관해 생각해야겠지만 일단 작성하고 나면 루틴의 내부 동작 방식을 몰라도 해당 루틴의 구현 사항에 신경 쓰지 않고 루틴을 사용할 수 있다. 내부 루프나 조건문이 깊게 중첩되어 있다면 루틴을 서브 루틴으로 나누어야한다.  
 이해하기 쉬운 중간 단계의 추상화를 도입한다.  
 
-'''cpp
+```cpp
 if( node<> null) then
     while(node.next <> null) do
         node = node.next
@@ -21,12 +21,12 @@ if( node<> null) then
 else
     leafName = “”
 end
-''''
+````
 
 위 코드는 다음 루틴으로 대체할 수 있다.  
-'''cpp
+```cpp
 leafName = GetLeafName(node)
-''''
+````
 
 중복 코드를 피한다.
 
