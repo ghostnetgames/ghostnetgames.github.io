@@ -7,6 +7,7 @@ permalink: index.html
 summary: GhostNet Games는 블록체인 네트워크인 GhostNet 플랫폼을 기반으로 하는 멀티 온라인 게임을 의미합니다. 을 기반하여 원할하게 동작하기 위해 Open API를 제공하고 문서를 공유하고 있습니다.
 ---
 
+{% include note.html content="현재 이 사이트는 OpenApi와 함께 개발중입니다." %}
 ## Introduction
 GhostNet Games는 블록체인 네트워크인 GhostNet 플랫폼을 기반으로 하는 멀티 온라인 게임을 의미합니다. 
 게임이나 앱이 플랫폼GhostNet 플랫폼을 확장시키기 위해 개발되고 있으며 게임은 블록체인 기반 게임의 가능성을 발굴하기위해 서로 상호 호혜적인인 관계로 발전시키켜 나아가는 것이 목적입니다.

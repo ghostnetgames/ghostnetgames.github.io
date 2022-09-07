@@ -107,7 +107,7 @@ entries:
         subfolderitems:
 
         - title: Start
-          url: /mydoc_tdd_start6.html
+          url: /mydoc_django_start.html
           output: web
 
 
