@@ -9,8 +9,9 @@ folder: mydoc
 ---
 
 ## Install Nuget
-Framework 2.1 기준으로 개발되었으며 Nuget을 통해 배포할 계획입니다. 
-현재는 개발 중에 있으므로 아직 Nuget에서 확인해보실 수는 없습니다.
+Framework 2.1 기준으로 개발되었으며 Nuget을 통해 배포하고 있습니다. 
+현재는 개발 중이며 Beta 버전이 Nuget에 Release 되고 있습니다.
+[Nuget GhostOpenApi](https://www.nuget.org/packages/GhostOpenApi)
 
 ### 1. Install on Visual Studio
 

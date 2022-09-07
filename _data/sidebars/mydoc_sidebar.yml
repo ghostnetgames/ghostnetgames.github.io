@@ -77,6 +77,9 @@ entries:
         - title: Start
           url: /mydoc_tdd_start6.html
           output: web
+        - title: 고급 함수, 루틴 
+          url: /mydoc_swa_func.html
+          output: web
 
       - title: Test Driven Development
         output: web, pdf
@@ -84,6 +87,14 @@ entries:
 
         - title: NUnit
           url: /mydoc_tdd_start.html
+          output: web
+          
+      - title: Go Programming Language
+        output: web, pdf
+        subfolderitems:
+
+        - title: Start
+          url: /mydoc_tdd_start6.html
           output: web
 
       - title: BlockChain
