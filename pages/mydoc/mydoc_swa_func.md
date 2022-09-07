@@ -1,6 +1,6 @@
 ---
 title: 고급 루틴, 함수(Function)
-permalink: mydoc_tdd_start.htm
+permalink: mydoc_swa_func.html
 keywords: function, 고급 함수, 작성법
 sidebar: mydoc_sidebar
 folder: mydoc
