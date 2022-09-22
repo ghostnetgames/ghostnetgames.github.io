@@ -22,4 +22,6 @@ https://stackoverflow.com/questions/43284881/jenkins-integration-for-dotnet-test
 그러나 git push가 일어나도 build가 수행되지 않는다.
 webhook 설정이 되지 않아서 그런것 같다.
 
+윈도우이므로 openssh를 설치해야한다.
+
 {% include links.html %}
