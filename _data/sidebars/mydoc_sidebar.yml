@@ -74,11 +74,15 @@ entries:
         output: web, pdf
         subfolderitems:
 
-        - title: Start
-          url: /mydoc_tdd_start6.html
-          output: web
         - title: 고급 함수, 루틴 
           url: /mydoc_swa_func.html
+          output: web
+      - title: DevOps
+        output: web, pdf
+        subfolderitems:
+
+        - title: Jenkins + MSBuild
+          url: /mydoc_jenkins_ms.html
           output: web
 
       - title: Test Driven Development
@@ -98,6 +102,14 @@ entries:
           output: web
 
       - title: BlockChain
+        output: web, pdf
+        subfolderitems:
+
+        - title: Start
+          url: /mydoc_tdd_start6.html
+          output: web
+          
+      - title: WPF
         output: web, pdf
         subfolderitems:
 
