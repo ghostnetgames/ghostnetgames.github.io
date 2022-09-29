@@ -51,6 +51,12 @@ entries:
     - title: Overview
       url: /mydoc_api_overview.html
       output: web, pdf
+    - title: Open Api Architecture
+      url: /mydoc_api_architecture.html
+      output: web, pdf
+    - title: Open Api Protocol
+      url: /mydoc_api_protocol.html
+      output: web, pdf
 
       subfolders:
       - title: Api List
@@ -65,8 +71,8 @@ entries:
     output: web, pdf
 
     folderitems:
-    - title: Open Api Architecture
-      url: /mydoc_api_architecture.html
+    - title: Overview
+      url: /mydoc_tech_overview.html
       output: web, pdf
 
       subfolders:
