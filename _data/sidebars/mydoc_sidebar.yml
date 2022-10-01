@@ -51,10 +51,16 @@ entries:
     - title: Overview
       url: /mydoc_api_overview.html
       output: web, pdf
-    - title: Open Api Architecture
+
+    - title: QuickStart
+      url: /mydoc_api_quickstart.html
+      output: web, pdf
+
+    - title: OpenApi Architecture
       url: /mydoc_api_architecture.html
       output: web, pdf
-    - title: Open Api Protocol
+
+    - title: OpenApi Protocol
       url: /mydoc_api_protocol.html
       output: web, pdf
 
