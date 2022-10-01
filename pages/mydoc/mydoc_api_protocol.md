@@ -29,7 +29,7 @@ BlockChain 관련 프로토콜은  KeyValue Store 기능을 지원하고 있어 
         - 멤버가 Timeout일 때
     - 로비에 Event가 일정 시간 없는 경우 마스터 노드는 로비를 Delete 한다.
 
-```c#
+{% highlight c# %}
 var robbyEventHandler = new GhostRobbyEventHandler();
 GhostRobby ghostRobby = await ghostOpenApi.MakeRobbySync(new GhostRobbyInfo() {
     Title = "test",
@@ -39,7 +39,7 @@ GhostRobby ghostRobby = await ghostOpenApi.MakeRobbySync(new GhostRobbyInfo() {
 }, robbyEventHandler);
 
 var ok = await ghostOpenApi.ReleaseRobby(ghostRobby);
-```
+{% endhighlight %}
 `GhostRobbyEventHandler`는 Event나 Packet이 도착했을 때 호출되는 Callback Function Class입니다. `MakeRobbySync` 함수를 실행시켜 마스터 노드에게 Robby생성을 요청합니다. 실패할 경우 null을 return합니다. 정상적으로 생성되면 ghostRobby 인스턴스가 생성됩니다.
 Release를 호출하여 ghostRobby를 삭제합니다.
 
@@ -50,13 +50,13 @@ Release를 호출하여 ghostRobby를 삭제합니다.
     - 다양한 포맷을 지원할 수 있어야 한다.
     - 브로드 캐스트 기능을 지원한다.
 
-```c#
+{% highlight c# %}
 var message = new byte[1024];
 var ok = ghostRobby.BroadcastMessage(message);
 
 List<GhostNetUser> member = ghostRobby.GetMemberList();
 var ok = member[0].SendMessage(message);
-```
+{% endhighlight %}
 
 
 {% include links.html %}
