@@ -22,12 +22,12 @@ if( node<> null) then
 else
     leafName = “”
 end
-````
+```
 
 위 코드는 다음 루틴으로 대체할 수 있다.  
 ```cpp
 leafName = GetLeafName(node)
-````
+```
 
 ## 중복 코드를 피한다.
 
