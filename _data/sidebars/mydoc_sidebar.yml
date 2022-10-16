@@ -117,8 +117,8 @@ entries:
         output: web, pdf
         subfolderitems:
 
-        - title: Start
-          url: /mydoc_tdd_start6.html
+        - title: Golang Web Server 만들기
+          url: /mydoc_go_server.html
           output: web
 
       - title: BlockChain

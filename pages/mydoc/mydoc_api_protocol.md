@@ -43,6 +43,9 @@ var ok = await ghostOpenApi.ReleaseRobby(ghostRobby);
 `GhostRobbyEventHandler`는 Event나 Packet이 도착했을 때 호출되는 Callback Function Class입니다. `MakeRobbySync` 함수를 실행시켜 마스터 노드에게 Robby생성을 요청합니다. 실패할 경우 null을 return합니다. 정상적으로 생성되면 ghostRobby 인스턴스가 생성됩니다.
 Release를 호출하여 ghostRobby를 삭제합니다.
 
+### Robby 해제 또는 실패 이후 
+로비가 해제 또는 생성 실패되었을 경우 Client는 이 사실을 인지해야한다. 생성 실패의 경우 실패 메시지를 바로 받으면서 인지가 가능하지만 오랜 Idle 상태로 인한 해제는 인지하기 어렵다. 이로인해 유효하지 않은 메시지가 전송될 수 있다. 따라서 로비가 해제될 경우 해제 Event 메시지를 전송해야하며 이를 인지하지 못한 경우 유효하지 않은 메시지에 해제 Event를 재전송할 수 있어야한다. 
+
 ## 멤버간 통신
 
 - Message 전송
