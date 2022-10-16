@@ -1,6 +1,6 @@
 ---
-title: Web Server 만들기 (header, footer))\#3
-permalink: mydoc_go_server_2.html
+title: Web Server 만들기 (header, footer)) #3
+permalink: mydoc_go_server_3.html
 keywords: golang, go, web, server
 sidebar: mydoc_sidebar
 folder: mydoc

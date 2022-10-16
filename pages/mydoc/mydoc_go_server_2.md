@@ -1,5 +1,5 @@
 ---
-title: Web Server 만들기 (모듈화)\#2
+title: Web Server 만들기 (모듈화) #2
 permalink: mydoc_go_server_2.html
 keywords: golang, go, web, server
 sidebar: mydoc_sidebar
