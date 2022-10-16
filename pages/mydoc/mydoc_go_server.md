@@ -1,5 +1,5 @@
 ---
-title: Golang Web Server 만들기
+title: Web Server 만들기 (기초)\#1
 permalink: mydoc_go_server.html
 keywords: golang, go, web, server
 sidebar: mydoc_sidebar
@@ -66,5 +66,29 @@ func main() {
 }
 ```
 
-
+```html
+<html lang="en">
+    <head>
+        <title>GhostWebService</title>
+        <link rel="stylesheet" href="/bootstrap.css">
+        <script src="/bootstrap.js"></script>
+    </head>
+    <body>
+        <table class="table">
+        <thead>
+            <th scope="col">#</th>
+            <th scope="col">test1</th>
+        </thead>
+        <tbody>
+            {{range .}}
+            <tr>
+                <td scope="row">1</td>
+                <td scope="row">{{.Title}}</td>
+            </tr>
+            {{end}}
+        </tbody>
+        </table>
+    </body>
+</html>
+```
 {% include links.html %}

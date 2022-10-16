@@ -117,8 +117,12 @@ entries:
         output: web, pdf
         subfolderitems:
 
-        - title: Golang Web Server 만들기
+        - title: Golang Web Server 만들기 1편
           url: /mydoc_go_server.html
+          output: web
+
+        - title: Golang Web Server 만들기 2편
+          url: /mydoc_go_server_2.html
           output: web
 
       - title: BlockChain
