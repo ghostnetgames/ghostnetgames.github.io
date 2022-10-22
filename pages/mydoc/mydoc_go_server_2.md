@@ -1,5 +1,5 @@
 ---
-title: Web Server 만들기 (모듈화) #2
+title: Web Server 만들기 (모듈화) &#35;2
 permalink: mydoc_go_server_2.html
 keywords: golang, go, web, server
 sidebar: mydoc_sidebar
@@ -7,8 +7,10 @@ folder: mydoc
 ---
 
 ### Go로 Web Server를 쉽게 만들어보자 2편
+#### Module 분리하여 정의하기
 
 ```go
+//http/webserver.go
 package webserver
 
 import (
@@ -32,18 +34,12 @@ func (httpServer *HttpServer) indexHandler(w http.ResponseWriter, r *http.Reques
 	} else {
 		filename = strings.TremLeft(r.URL.Path, "/")
 	}
-
-	t, err := template.ParseFiles(filename)
-	if err != nil {
+	
+	if t, err := template.ParseFiles(filename); err != nil {
 		log.Fatal(err)
-	}
-	data, err := ioutil.ReadFile("./result.json")
-	if err != nil {
-		log.Fatal(err)
-	}
-	var article []Article
-	json.Unmarshal(data, &article)
-	t.Execute(w, article)
+	} else {
+		t.Execute(w, httpServer.param)
+	}	
 }
 
 func (httpServer *HttpServer)StartServer(article []types.Artical) {
@@ -57,6 +53,7 @@ func (httpServer *HttpServer)StartServer(article []types.Artical) {
 ```
 
 ```go
+//types/article.go
 package types
 
 type Article struct {
@@ -65,6 +62,7 @@ type Article struct {
 ```
 
 ```go
+//main.go
 package main
 
 import (
@@ -88,6 +86,42 @@ func main() {
 	server.StartServer(article)
 }
 ```
+#### Multi Param 사용하기
+```go
+httpServer.param["UrlParam"] = r.URL.Query()
+...
+httpServer.param["Article"] = article
+```
+
+#### Multi Param Html Template 보기
+{% raw %}
+```html
+<html lang="en">
+    <head>
+        <title>GhostWebService</title>
+        <link rel="stylesheet" href="/bootstrap.css">
+        <script src="/bootstrap.js"></script>
+    </head>
+    <body>
+        <table class="table">
+        <thead>
+            <th scope="col">#</th>
+            <th scope="col">test1</th>
+        </thead>
+        <tbody>
+            {{range .Article}}
+            <tr>
+                <td scope="row">1</td>
+                <td scope="row">{{.Title}}</td>
+            </tr>
+            {{end}}
+        </tbody>
+        </table>
+		{{index .UrlParam.id "key"}}
+    </body>
+</html>
+```
+{% endraw %}
 이전보다 Responsibility에 따라 모듈을 나눠 의존성이 개선되었다. 
 
 {% include links.html %}

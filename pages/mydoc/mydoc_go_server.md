@@ -1,5 +1,5 @@
 ---
-title: Web Server 만들기 (기초)\#1
+title: Web Server 만들기 (기초) &#35;1
 permalink: mydoc_go_server.html
 keywords: golang, go, web, server
 sidebar: mydoc_sidebar
@@ -65,7 +65,7 @@ func main() {
 	log.Fatal(http.ListenAndServe(":9123", nil))
 }
 ```
-
+{% raw %}
 ```html
 <html lang="en">
     <head>
@@ -91,4 +91,5 @@ func main() {
     </body>
 </html>
 ```
+{% endraw %}
 {% include links.html %}

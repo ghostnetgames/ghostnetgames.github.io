@@ -1,5 +1,5 @@
 ---
-title: Web Server 만들기 (header, footer)) #3
+title: Web Server 만들기 (header, footer)) &#35;3
 permalink: mydoc_go_server_3.html
 keywords: golang, go, web, server
 sidebar: mydoc_sidebar
@@ -7,87 +7,45 @@ folder: mydoc
 ---
 
 ### Go로 Web Server를 쉽게 만들어보자 3편
+Web App을 만들다 보면 header와 footer와 같이 모든 페이지에 공통적으로 들어가는 코드가 있다. 이것을 별도의 파일에 정의하여 include를 통해 외부에 link를 하고 값을 로드해서 사용하는 형태로 구성한다.  
+html/template에서도 해당 기능을 지원하고 있다.  
 
 ```go
-package webserver
-
-import (
-	"ghostwebserver/types"
-	"log"
-	"net/http"
-	"html/template"
-	"string"
-)
-
-type HttpServer struct {
-	param map[string] interface {}
-}
-
-func (httpServer *HttpServer) indexHandler(w http.ResponseWriter, r *http.Request) {
-	// Ref: https://pkg.go.dev/net/url#URL
-	httpServer.param["UrlParam"] = r.URL.Query()
-	var filename string
-	if r.URL.Path == "/" {
-		filename = "index.html"
-	} else {
-		filename = strings.TremLeft(r.URL.Path, "/")
-	}
-
-	t, err := template.ParseFiles(filename)
-	if err != nil {
-		log.Fatal(err)
-	}
-	data, err := ioutil.ReadFile("./result.json")
-	if err != nil {
-		log.Fatal(err)
-	}
-	var article []Article
-	json.Unmarshal(data, &article)
-	t.Execute(w, article)
-}
-
-func (httpServer *HttpServer)StartServer(article []types.Artical) {
-    // web site 첫 화면과 그것을 구성하는 css, js 파일을 Service 할 수 있는 handler를 등록한다.
-    httpServer.param = make(map[string]interface{})
-	httpServer.param["Article"] = article
-
-	http.HandleFunc("/", httpServer.indexHandler) // indexHandler에 httpServer를 붙여야한다..why?
-	log.Fatal(http.ListenAndServe(":9123", nil))
-}
+// t, _ := template.ParseFiles(filename)
+t, _ := template.ParseFiles(filename, "header.html")
+t.Execute(w, article)
 ```
-
-```go
-package types
-
-type Article struct {
-	Title string
-}
+2편에서 parameter 하나만 추가하면 된다.
+{% raw %}
+```html
+<html lang="en">
+    <head>
+        {{template "header.html"}}
+    </head>
+    <body>
+        <table class="table">
+        <thead>
+            <th scope="col">#</th>
+            <th scope="col">test1</th>
+        </thead>
+        <tbody>
+            {{range .}}
+            <tr>
+                <td scope="row">1</td>
+                <td scope="row">{{.Title}}</td>
+            </tr>
+            {{end}}
+        </tbody>
+        </table>
+    </body>
+</html>
 ```
-
-```go
-package main
-
-import (
-	"ghostwebserver/types"
-	"ghostwebserver/http"
-	"fmt"
-	"encoding/json"
-	"io/ioutil"
-)
-
-func main() {
-	var server webserver.HttpServer
-	var article []types.Article
-
-	if data, err := ioutil.ReadFile("./result.json"); err != nil {
-		fmt.Println(err)
-	} else {
-		json.Unmarshal(data, &article)
-	}
-
-	server.StartServer(article)
-}
+header.html의 내용은 아래와 같다.
+```html
+<title>GhostWebService</title>
+<link rel="stylesheet" href="/bootstrap.css">
+<script src="/bootstrap.js"></script>
 ```
-이전보다 Responsibility에 따라 모듈을 나눠 의존성이 개선되었다. 
+{% endraw %}
 
 {% include links.html %}
