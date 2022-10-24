@@ -148,5 +148,73 @@ import (
 	"github.com/stretchr/testify/require"
 )
 ```
-assert와 require 패키지를 추가로 사용하였다. 
+<!--assert와 require 패키지를 추가로 사용하였다. assert와 require는 상호 보완적으로 사용된다.  
+assert는 직관적이고 간단하게 사용하기 좋다. 반면 test에 deferred call이나 고루틴이 포함되어 있다면 require를 사용해야한다. require는 deferred call과 고루틴의 수행과 완료를 보장한다고 한다.  -->
+놀랍게도 testify 패키지에서 assert는 bool 값을 반환할 뿐 종료되지 않는 다고 한다. 우리가 생각하는 기능은 require가 수행한다. require는 그 즉시 exception을 발생시키고 test를 종료시킨다.  
+아래 Test는 임시 폴더와 그곳에 Config파일을 복사해두는 것을 제외하면 단순하다. 따라서 불필요한 코드는 생략하였다.
+
+```go
+func TestPrecedence(t *testing.T) {
+	// Run the tests in a temporary directory
+	// 임시 폴더 생성 생략~ 
+
+	// Set favorite-color with the config file
+	t.Run("config file", func(t *testing.T) {
+		// Copy the config file into our temporary test directory
+		// Config 파일 복사 생략~
+
+		// Run ./stingoftheviper
+		cmd := NewRootCommand()
+		output := &bytes.Buffer{}
+		cmd.SetOut(output)
+		cmd.Execute()
+
+		gotOutput := output.String()
+		wantOutput := `Your favorite color is: blue
+The magic number is: 7
+`
+		assert.Equal(t, wantOutput, gotOutput, "expected the color from the config file and the number from the flag default")
+	})
+```
+main.go에 작성한 `NewRootCommand` 함수를 통자로 호출한다. 그리고 결과를 SetOut을 통해 버퍼를 주입하여 최종 출력 메시지를 문자열 비교를 통해 검사한다.
+```go
+
+	// Set favorite-color with an environment variable
+	t.Run("env var", func(t *testing.T) {
+		// Run STING_FAVORITE_COLOR=purple ./stingoftheviper
+		os.Setenv("STING_FAVORITE_COLOR", "purple")
+		defer os.Unsetenv("STING_FAVORITE_COLOR")
+
+		cmd := NewRootCommand()
+		output := &bytes.Buffer{}
+		cmd.SetOut(output)
+		cmd.Execute()
+
+		gotOutput := output.String()
+		wantOutput := `Your favorite color is: purple
+The magic number is: 7
+`
+		assert.Equal(t, wantOutput, gotOutput, "expected the color to use the environment variable value and the number to use the flag default")
+	})
+```
+이 테스트 방식도 위와 동일하다. 단지 환경변수 설정을 통해 값을 변경하고 최종 값이 변경되었는지 확인한다.
+```go
+
+	// Set number with a flag
+	t.Run("flag", func(t *testing.T) {
+		// Run ./stingoftheviper --number 2
+		cmd := NewRootCommand()
+		output := &bytes.Buffer{}
+		cmd.SetOut(output)
+		cmd.SetArgs([]string{"--number", "2"})
+		cmd.Execute()
+
+		gotOutput := output.String()
+		wantOutput := `Your favorite color is: red
+The magic number is: 2
+`
+		assert.Equal(t, wantOutput, gotOutput, "expected the number to use the flag value and the color to use the flag default")
+	})
+}
+```
 {% include links.html %}

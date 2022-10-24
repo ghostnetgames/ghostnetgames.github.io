@@ -100,7 +100,9 @@ entries:
       - title: Test Driven Development
         output: web, pdf
         subfolderitems:
-
+        - title: Testing Go Code With Testify
+          url: /mydoc_tdd_golang.html
+          output: web          
         - title: NUnit
           url: /mydoc_tdd_start.html
           output: web          
@@ -127,6 +129,9 @@ entries:
           output: web
         - title: Golang Web Server 만들기 3편
           url: /mydoc_go_server_3.html
+          output: web
+        - title: Golang + Sqlite
+          url: /mydoc_go_sqlite.html
           output: web
         - title: Golang + PostgreSql
           url: /mydoc_go_postsql.html
