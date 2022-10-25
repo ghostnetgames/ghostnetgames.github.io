@@ -85,9 +85,14 @@ entries:
       - title: Software Architecture
         output: web, pdf
         subfolderitems:
-
         - title: 고급 함수, 루틴 
           url: /mydoc_swa_func.html
+          output: web
+        - title: 변수사용시 고려해야할 사항
+          url: /mydoc_swa_var.html
+          output: web
+        - title: 변수 이름의 기능
+          url: /mydoc_swa_var2.html
           output: web
       - title: DevOps
         output: web, pdf
@@ -130,6 +135,9 @@ entries:
         - title: Golang Web Server 만들기 3편
           url: /mydoc_go_server_3.html
           output: web
+        - title: Golang + httptest 만들기
+          url: /mydoc_go_servertest.html
+          output: web
         - title: Golang + Sqlite
           url: /mydoc_go_sqlite.html
           output: web
@@ -159,18 +167,9 @@ entries:
       - title: Xamarin
         output: web, pdf
         subfolderitems:
-
         - title: Start
           url: /mydoc_tdd_start6.html
-          output: web
-          
-      - title: DJango
-        output: web, pdf
-        subfolderitems:
-
-        - title: Start
-          url: /mydoc_django_start.html
-          output: web
+          output: web          
 
 
   - title: Troubleshooting
