@@ -147,6 +147,9 @@ entries:
         - title: Cobra & Viper 활용법
           url: /mydoc_go_stingofviper.html
           output: web
+        - title: Golang + gRPC
+          url: /mydoc_go_grpc.html
+          output: web
 
       - title: BlockChain
         output: web, pdf
