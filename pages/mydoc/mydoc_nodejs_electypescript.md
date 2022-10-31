@@ -22,7 +22,8 @@ $ npx tsc --init
 ```
 그리고 build 폴더에 copy할 수 있도록 라이브러리를 추가한다.  
 - copyfiles => file copy for cross platform
-- cross-env => setting environment variable for cross platform
+- cross-env => setting environment variable for cross platform  
+
 ```bash
 $ npm i -D copyfiles cross-env
 ```
@@ -37,7 +38,8 @@ $ npm i -D copyfiles cross-env
 }
 ```
 위 과정은 Typescript를 javascript로 변환하고 그 결과물을 build 밑으로 복사하여 electron을 실행한다. 
-main.js를 main.ts로 변경 후 아래 코드를 입력한다.
+main.js를 main.ts로 변경 후 아래 코드를 입력한다.  
+
 ```ts
 import { app, BrowserWindow } from "electron"; // ES import 
 
@@ -54,6 +56,7 @@ app.on("ready", () => {
   window.loadFile("index.html");
 });
 ```
+
 그리고 아래 명령을 실행한다
 ```bash
 $ npm start
