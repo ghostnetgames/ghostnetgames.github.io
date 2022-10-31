@@ -24,8 +24,35 @@ $ sudo ./update-golang.sh
 $ apt install -y protobuf-compiler
 $ protoc --version  # Ensure compiler version is 3+
 ```
+#### Proto 컴파일해보기 
 [Example 코드](https://github.com/grpc/grpc-go/tree/master/examples/helloworld) 공식 guthub에서 받을 수 있는 소스 코드를 기반으로 분석한다.  
-먼저 proto파일이 잘 컴파일 되는지 확인한다. 
+```proto
+syntax = "proto3";
+
+option go_package = "google.golang.org/grpc/examples/helloworld/helloworld";
+option java_multiple_files = true;
+option java_package = "io.grpc.examples.helloworld";
+option java_outer_classname = "HelloWorldProto";
+
+package helloworld;
+
+// The greeting service definition.
+service Greeter {
+  // Sends a greeting
+  rpc SayHello (HelloRequest) returns (HelloReply) {}
+}
+
+// The request message containing the user's name.
+message HelloRequest {
+  string name = 1;
+}
+
+// The response message containing the greetings
+message HelloReply {
+  string message = 1;
+}
+```
+아래 명령어를 통해 proto 파일이 잘 컴파일 되는지 확인한다. 
 ```bash
 $ protoc --go_out=. --go_opt=paths=source_relative --go-grpc_out=. --go-grpc_opt=paths=source_relative helloworld/helloworld.proto
 ```

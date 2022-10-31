@@ -162,8 +162,12 @@ entries:
         output: web, pdf
         subfolderitems:
 
-        - title: Electron VS2019로 시작하기
-          url: /mydoc_nodejs_electronvs.html
+        - title: Electron VSCode로 시작하기
+          url: /mydoc_nodejs_electronvscode.html
+          output: web
+
+        - title: Electron을 typescript로 확장하기
+          url: /mydoc_nodejs_electypescript.html
           output: web
           
       - title: .Net

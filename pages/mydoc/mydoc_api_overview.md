@@ -7,7 +7,7 @@ folder: mydoc
 ---
 
 ## OpenApi 지원 플랫폼
-.Net Standard Class Library 2.1을 지원하고 있습니다. 
+.NET Standard Class Library 2.1을 지원하고 있습니다. 
 .NET Standard 라이브러리는 .NET Core, .NET Framework, Mono / Xamarin과 같은 .NET Standard 호환 런타임에서 실행됩니다.
 * Xamarin
 * WPF 및 윈도우 Application
