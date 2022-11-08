@@ -32,7 +32,7 @@ $ npm i -D copyfiles cross-env
 {
 	"main": "build/main.js",
 	"scripts" : {
-    	"compile": "tsc && copyfiles -f index.html build",
+    "compile": "tsc && copyfiles -f index.html build",
 		"start": "npm run compile && cross-env DEBUG=true electron .",
 	}	
 }
@@ -77,21 +77,33 @@ index.html에서 button을 생성하고 클릭할 경우 alert 창을 띄워보�
 ```
 button과 renderer.js script를 추가하였다. renderer.js는 root 폴더 밑에 작성한다.
 ```js
+// renderer.js
 const onClick = (sel, fn) => document.querySelector(sel).addEventListener('click', fn);
 onClick('#btnTest', () => alert(__dirname));
 ```
 그리고 `npm start`를 실행하고 버튼을 클릭해본다.  
 최신버전을 사용하고있다면 alert창이 뜨지 않을 수 있다. 아래와 같이 옵션을 변경해야한다.
 ```ts
-  window = new BrowserWindow({
+window = new BrowserWindow({
     width: 800,
     height: 600,
     webPreferences: {
-      nodeIntegration: true,
-      contextIsolation: false,
+    nodeIntegration: true,
+    contextIsolation: false,
     },
-  });
+});
 ```
 최신 버전에서는 보안 문제로 contextIsolation의 default 값이 true로 되어 있다. 이 경우 main process와 접근은 다이렉트로 허용도지 않고 ipc를 통해서만 가능하다고 한다.
+[Stackoverflow 관련Issue](https://stackoverflow.com/questions/66455289/unable-to-use-node-js-apis-in-renderer-process)
+
+나중에 안 사실인데 옵션을 주지 않아도 아래와 같이 html를 수정해도 된다... ㅜㅜ  
+이것 또한 보안에 취약하다고 한다.
+```html
+<meta http-equiv="Content-Security-Policy" content="
+    default-src 'self';
+    script-src 'self' 'unsafe-inline';
+    connect-src *
+    ">
+```
 
 {% include links.html %}

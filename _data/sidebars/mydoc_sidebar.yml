@@ -169,6 +169,18 @@ entries:
         - title: Electron을 typescript로 확장하기
           url: /mydoc_nodejs_electypescript.html
           output: web
+
+        - title: Web bookmarker 만들기
+          url: /mydoc_nodejs_electlec01.html
+          output: web
+
+        - title: Markdown 편집기 (1)
+          url: /mydoc_nodejs_electlec02.html
+          output: web      
+
+        - title: Markdown 편집기 (2)
+          url: /mydoc_nodejs_electlec03.html
+          output: web          
           
       - title: .Net
         output: web, pdf
