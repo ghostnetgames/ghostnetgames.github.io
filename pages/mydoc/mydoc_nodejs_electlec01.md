@@ -22,6 +22,32 @@ Renderer Process는 web Page를 로드하여 GUI를 구성한다.
 
 최근 버전에서는 Renderer Process에서 보안상 이슈 때문에 system API를 접근하는 것이 허용되고 있지 않은 것 같다. 그래서 `contextBridge`를 사용하여 `ipc` 기반으로 Main Process와 Renderer Process가 통신하는 방법을 사용하는 것이 안전하다. 이것도 다룰 것이다.  
 
+#### 개발 환경
+
+```json
+{
+  "name": "electron_ex",
+  "version": "1.0.0",
+  "description": "",
+  "main": "build/main.js",
+  "type": "commonjs",
+  "scripts": {
+    "compile": "npx tsc && copyfiles -f index.html build",
+    "start": "npm run compile && cross-env DEBUG=true electron .",
+    "test": "test"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "copyfiles": "^2.4.1",
+    "cross-env": "^7.0.3",
+    "electron": "^21.2.0",
+    "electron-builder": "^23.6.0",
+    "typescript": "^4.8.4"
+  },
+}
+```
+
 ### UI
 index.html을 수정하는 것부터 시작한다.
 ```html
@@ -35,6 +61,7 @@ index.html을 수정하는 것부터 시작한다.
   <title>Bookmarker</title>
 </head>
 ```
+`Fetch 삽질`  
 header 부분에서 눈여겨 볼 것은 http-equiv field이다. 이것 때문에 일주일동안 삽질을 했다. header는 다른 파일에서 복붙하다보니 해당 tag가 누락되었다. 누락되었다기보다 content 내용이 달랐다. 그렇다보니 보안레벨이 높아졌고 renderer.js의 api들이 작동하지 않았다. 맞다. 이건 완전히 `초보자의 실수`다. 그러나 이 문제를 해결하기 위해 여기저기 찾아보면서 다양한 문서를 보게되었고 사람들의 다양한 고민들을 확인하면서 좀 더 감이 올라왔다.
 
 ```html

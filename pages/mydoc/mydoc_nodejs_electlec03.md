@@ -7,7 +7,7 @@ folder: mydoc
 ---
 ### Interprocess Communication 사용하기
 <!--Table로 만드는 것이 나을 듯 -->
-Electron은 두가지 타입의 process가 있는데 main process와 renderer process이다.  
+Electron은 두가지 타입의 process가 있는데 `main process`와 `renderer process`이다.  
 
 | main process | both process  | renderer process | 
 |---|---|---|
@@ -22,7 +22,7 @@ Electron은 두가지 타입의 process가 있는데 main process와 renderer pr
 
 ```typescript
 //main.ts
-const { app, BrowserWindow } = require('electron'); // ES import 
+const { app, BrowserWindow, dialog } = require('electron'); // ES import 
 const path = require('path');
 const fs = require('fs');
 require('@electron/remote/main').initialize();
@@ -40,8 +40,12 @@ app.on("ready", () => {
       enableRemoteModule: true,
     },
   });
+  require("@electron/remote/main").enable(win.webContents);
 ```
-그리고 윈도우를 생성할때 `enableRemoteModule: true`를 추가한다.
+
+그리고 윈도우를 생성할때 `enableRemoteModule: true`를 추가한다. 그리고 `webContents`를 등록한다. [webContents](https://www.electronjs.org/docs/latest/api/web-contents)[한글](https://tinydew4.github.io/electron-ko/docs/api/web-contents/)는 웹페이지의 렌더링과 관리를 책임진다. 
+
+
 ```typescript
   exports.getFileFromUser = async () => {
     const files = await dialog.showOpenDialog(win, {
@@ -80,6 +84,7 @@ ipcRenderer.on('file-opened', (event, file, content) => {
 });
 ```
 
+이제 markdown 파일이 정상적으로 로드되는지 확인한다.
 
 
 [ESM 문제](https://devblog.kakaostyle.com/ko/2022-04-09-1-esm-problem/)

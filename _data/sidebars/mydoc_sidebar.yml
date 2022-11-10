@@ -180,7 +180,11 @@ entries:
 
         - title: Markdown 편집기 (2)
           url: /mydoc_nodejs_electlec03.html
-          output: web          
+          output: web        
+
+        - title: Markdown 편집기 (3)
+          url: /mydoc_nodejs_electlec04.html
+          output: web     
           
       - title: .Net
         output: web, pdf
