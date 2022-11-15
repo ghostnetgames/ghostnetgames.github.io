@@ -6,8 +6,11 @@ sidebar: mydoc_sidebar
 folder: mydoc
 ---
 
+### markdown 편집기 기본 코드
+아래 코드를 기반으로 확장해 나간다.
 
 ```html
+<!--index.html-->
 <!DOCTYPE html>
 <html>
 
@@ -41,6 +44,7 @@ folder: mydoc
 ```
 
 ```css
+/* style.css */
 html {
     box-sizing: border-box;
 }
@@ -154,6 +158,7 @@ app.on("ready", () => {
 ```
 
 ```javascript
+// renderer.js
 const marked = require('marked');
 
 const markdownView = document.querySelector('#markdown');

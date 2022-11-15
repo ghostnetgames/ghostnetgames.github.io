@@ -30,6 +30,7 @@ require('@electron/remote/main').initialize();
 main에서 remote 패키지를 초기화시켜야 한다. 
 
 ```typescript
+//main.ts
 app.on("ready", () => {
   win = new BrowserWindow({
     // 생략
@@ -47,6 +48,7 @@ app.on("ready", () => {
 
 
 ```typescript
+//main.ts
   exports.getFileFromUser = async () => {
     const files = await dialog.showOpenDialog(win, {
       properties: ['openFile'],
@@ -61,6 +63,7 @@ app.on("ready", () => {
 그리고 renderer process에 의해 불려질 `getFileFromUser`를 정의한다. 외부 모듈에서 접근하기 위해서 `exports`에 변수를 생성한다. 이 함수는 파일을 열기 위한 dialog를 띄운다. dialog 속성에 따라 directory를 열 수도 있고 파일을 열수도 있다. 
 
 ```typescript
+//main.ts
     const openFile = (file: string) => {
       const content = fs.readFileSync(file).toString();
       win.webContents.send('file-opened', file, content);
@@ -69,6 +72,7 @@ app.on("ready", () => {
 그리고 파일을 읽고 renderer process에게 ipc를 전달한다.
 
 ```javascript
+// renderer.js
 const { ipcRenderer } = require('electron');
 const remote = require('@electron/remote').require('./main');
 const marked = require('marked');

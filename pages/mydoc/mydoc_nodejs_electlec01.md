@@ -65,6 +65,7 @@ index.html을 수정하는 것부터 시작한다.
 header 부분에서 눈여겨 볼 것은 http-equiv field이다. 이것 때문에 일주일동안 삽질을 했다. header는 다른 파일에서 복붙하다보니 해당 tag가 누락되었다. 누락되었다기보다 content 내용이 달랐다. 그렇다보니 보안레벨이 높아졌고 renderer.js의 api들이 작동하지 않았다. 맞다. 이건 완전히 `초보자의 실수`다. 그러나 이 문제를 해결하기 위해 여기저기 찾아보면서 다양한 문서를 보게되었고 사람들의 다양한 고민들을 확인하면서 좀 더 감이 올라왔다.
 
 ```html
+<!--index.html-->
 <body>
   <h1>Bookmarker</h1>
   <div class="error-message"></div>
@@ -83,6 +84,7 @@ UI를 구성한다. class이름으로 Dom 요소에 접근할 것이다. 링크�
 input type을 보면 `url`로 설정되어 있음을 알 수 있다. 내용이 유효한 URL패턴과 일치하지 않으면 Chromium에서 유효하지 않은 필드로 표시한다. 
 
 ```html
+<!--index.html-->
   <script>
     require('./renderer.js');
    </script>
@@ -111,6 +113,7 @@ const clearStorageButton = document.querySelector('.clear-storage');
 html에서 정의한 dom요소의 로드하는 코드이다. 
 
 ```js
+// renderer.js
 newLinkForm.addEventListener('submit', (event) => {
     event.preventDefault();
     const url = newLinkUrl.value;
@@ -137,6 +140,7 @@ url에 따라 html, json, xml등 여러가지 데이터를 요청할 수 있다.
 `localStorage`는 브라우저에 내장되어 있는 세션간 지속되는 간단한 KeyValue Store이다. 제목과 URL로 간단한 객체를 만들고 내장 Json 라이브러리를 사용하여 문자열로 변환한다음 URL을 키로 저장한다.
 
 ```js
+// renderer.js
 newLinkUrl.addEventListener('keyup', () => {
     newLinkSubmit.disabled = !newLinkUrl.validity.valid;
 });
