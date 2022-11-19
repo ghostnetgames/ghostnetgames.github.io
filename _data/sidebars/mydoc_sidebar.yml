@@ -189,6 +189,9 @@ entries:
         - title: Markdown 편집기 (4)
           url: /mydoc_nodejs_electlec05.html
           output: web     
+        - title: Markdown 편집기 (5)
+          url: /mydoc_nodejs_electlec06.html
+          output: web     
           
       - title: .Net
         output: web, pdf

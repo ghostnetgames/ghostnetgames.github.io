@@ -8,7 +8,35 @@ folder: mydoc
 
 ### markdown 편집기 기본 코드
 아래 코드를 기반으로 확장해 나간다.
+```json
+// pacakge.json
+{
+  "name": "electron_ex",
+  "version": "1.0.0",
+  "description": "",
+  "main": "build/main.js",
+  "type": "commonjs",
+  "scripts": {
+    "compile": "npx tsc && copyfiles -f index.html build",
+    "start": "npm run compile && cross-env DEBUG=true electron .",
+    "test": "test"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "copyfiles": "^2.4.1",
+    "cross-env": "^7.0.3",
+    "electron": "^21.2.0",
+    "electron-builder": "^23.6.0",
+    "typescript": "^4.8.4"
+  },
+  "dependencies": {
+    "@electron/remote": "^2.0.8",
+    "marked": "^4.2.2"
+  }
+}
 
+```
 ```html
 <!--index.html-->
 <!DOCTYPE html>

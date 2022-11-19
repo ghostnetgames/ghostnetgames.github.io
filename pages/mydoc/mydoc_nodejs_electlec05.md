@@ -137,9 +137,189 @@ grag&drop 관련 Event를 지원하고 있기 때문에 해당 Event에 연결�
 
 먼저 window 창의 top event를 비활성화 해야한다. 기본 액션은 웹브라우저를 기준으로 하고 있기 때문이다. 
 
+```js
+// renderer.js
+document.addEventListener('dragstart', event => event.preventDefault());
+document.addEventListener('dragover', event => event.preventDefault());
+document.addEventListener('dragleave', event => event.preventDefault());
+document.addEventListener('drop', event => event.preventDefault());
+```
 
-<!--
-https://github.com/dtychshenko/electron-tabs-sample
-https://www.npmjs.com/package/electron-tabs
-https://github.com/sourcechord/electron-gridlayout-sample-->
+그리고 style.css를 통해 visual feedback을 제공한다. 파일을 드래그하여 해당 창위에 올려놨을 때 테두리나 배경색을 변경하여 맞는 타입의 파일을 드래그하고 있는 지의 정보를 제공한다. 
+
+```css
+/* style.css */
+.raw-markdown.drag-over {
+    background-color: rgb(181, 220, 216);
+    border-color: rgb(75, 160, 151);
+}
+
+.raw-markdown.drag-error {
+    background-color: rgba(170, 57, 57, 1);
+    border-color: rgba(255, 170, 170, 1);
+}
+```
+
+Helper 함수를 작성한다.  
+Event를 받아 `dataTransfer` 구조체를 통해 원하는 정보를 구한다. 배열 첫번째로 되어 있는 이유는 다수의 파일을 드레그할 수 있기 때문이다. 이 예제에서는 다수의 파일에 대해서 처리하지 않는다. 
+
+```js
+// renderer.js
+const getDraggedFile = (event) => event.dataTransfer.items[0];
+const getDroppedFile = (event) => event.dataTransfer.files[0];
+const fileTypeIsSupported = (file) => {
+    return ['text/plain', 'text/markdown'].includes(file.type);
+};
+```
+
+이제 `dragover`와 `dragleave` event를 작성한다. dragover는 마우스로 파일을 윈도우 창에 올리는 행동을 한 경우이다. 이 경우 앞서 작성한 style 태그가 적용될 수 있도록 한다. 그리고 dragleave이벤트는 떠났을 때이고 이 때  style 태그를 제거한다. dom객체의 classList는 style 태그의 속성을 가리킨다.
+
+```js
+// renderer.js
+markdownView.addEventListener('dragover', (event) => {
+    const file = getDraggedFile(event);
+    if (fileTypeIsSupported(file)) {
+        markdownView.classList.add('drag-over');
+    } else {
+        markdownView.classList.add('drag-error');
+    }
+});
+markdownView.addEventListener('dragleave', () => {
+    markdownView.classList.remove('drag-over');
+    markdownView.classList.remove('drag-error');
+});
+```
+
+그리고 `dragdrop` 이벤트를 작성한다. 파일 형식이 맞다면 해당 파일을 Open하도록 하고 그렇지 않다면 alert창을 통해 알려준다. 
+
+```js
+// renderer.js
+markdownView.addEventListener('drop', (event) => {
+    const file = getDroppedFile(event);
+    if (fileTypeIsSupported(file)) {
+        mainWin.openFile(currentWin, file.path);
+    } else {
+        alert('That file type is not supported');
+    }
+    markdownView.classList.remove('drag-over');
+    markdownView.classList.remove('drag-error');
+});
+```
+
+#### 파일 수정 감지하기 
+파일을 수정하다보면 다른 tool에 의해 파일이 수정되는 경우가 발생한다. 그럴 경우 수정된 파일로 업데이트를 한다. 그런데 현재 본인이 직접 수정하고 있는데 다른 앱으로 인해 수정되어 덮어쓰여지는 사고가 발생할 수 있다. 그럴땐 alert 창으로 확인하는 코드를 넣으면 된다. 일단 그냥 업데이트 하는 코드를 살펴 본다.
+
+```ts
+// main.ts
+const openFiles = new Map();
+const startWatchingFile = (targetWindow: any, file: string) => {
+  stopWatchingFile(targetWindow);
+  const watcher = fs.watchFile(file, (event: any) => {
+    if (event === 'change') {
+      const content = fs.readFileSync(file);
+      targetWindow.webContents.send('file-opened', file, content);
+    }
+  });
+  openFiles.set(targetWindow, watcher);
+};
+
+const stopWatchingFile = (targetWindow: any) => {
+  if (openFiles.has(targetWindow)) {
+    openFiles.get(targetWindow).stop();
+    openFiles.delete(targetWindow);
+  }
+};
+```
+
+`stopWatchingFile`은 `createWindow` 함수의 closed event시 호출되도록 한다. 그리고 `openFile` 함수에서 `startWatchingFile`을 호출하도록한다.
+
+```ts
+// main.ts
+  newWindow.on('closed', () => {
+    windows.delete(newWindow);
+    stopWatchingFile(newWindow);
+    newWindow = null;
+  });
+```
+
+#### 변경사항을 버리기 전에 물어보기
+
+우리가 저장하지 않았는데 저장했다는 착각을 하고 실수로 종료 버튼을 누르면 그 동안 수정했던 문서가 날아갈 수 있다. 따라서 한번 더 물어보는 성의를 보여주자.
+`close` 이벤트가 발생했을 때 `showMessageBox`를 통해 확인한다. 이전과 다른점은 `close`와 `closed`라는 점이다. 이 두 이벤트는 트리거 되는 시점이 다르다.
+
+```ts
+// main.ts
+  newWindow.on('close', (event: any) => {
+    if (newWindow.isDocumentEdited()) {
+      event.preventDefault();
+      dialog.showMessageBox(newWindow, {
+        type: 'warning',
+        title: 'Quit with Unsaved Changes?',
+        message: 'Your changes will be lost if you do not save.',
+        buttons: [
+          'Quit Anyway', 'Cancel',
+        ],
+        defaultId: 0,
+        cancelId: 1
+      }).then((result: any) => {
+        if (result.response === 0) newWindow.destroy();
+      });      
+    }
+  });
+```
+
+`showMessageBox`는 버튼들을 커스텀할 수 있으며 각 배열에 따라 버튼이 보여지게 된다. 해당 버튼을 클릭하게 되면 버튼의 index id가 리턴된다.  
+다음으로 renderer.js를 조금 리펙토링 해보자.
+
+```js
+// renderer.js
+const renderFile = (file, content) => {
+    filePath = file;
+    originalContent = content;
+    markdownView.value = content;
+    renderMarkdownToHtml(content);
+    updateUserInterface(false);
+};
+```
+
+`renderFile`함수는 랜더링에 필요한 함수들을 모아두었다. 이 함수는 `file-opened`와 `file-changed` 이벤트에서 호출하도록 할 것이다. 
+
+```js
+// renderer.js
+ipcRenderer.on('file-opened', (event, file, content) => {
+    if (currentWindow.isDocumentEdited()) {
+        const result = remote.dialog.showMessageBox(currentWindow, {
+            type: 'warning',
+            title: 'Overwrite Current Unsaved Changes?',
+            message: 'Opening a new file in this window will overwrite your unsaved changes.Open this file anyway?',
+            buttons: [
+                'Yes',
+                'Cancel',
+            ],
+            defaultId: 0,
+            cancelId: 1
+        });
+        if (result === 1) { return; }
+    }
+    renderFile(file, content);
+});
+
+ipcRenderer.on('file-changed', (event, file, content) => {
+    const result = remote.dialog.showMessageBox(currentWindow, {
+        type: 'warning',
+        title: 'Overwrite Current Unsaved Changes?',
+        message: 'Another application has changed this file. Load changes?',
+        buttons: [
+            'Yes',
+            'Cancel',
+        ],
+        defaultId: 0,
+        cancelId: 1
+    });
+    renderFile(file, content);
+});
+```
+
+이것으로 마무리한다. 
+
 {% include links.html %}
